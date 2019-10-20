@@ -12,16 +12,16 @@ script:
 
 after_success:
   - docker build -t moehadidi/multi-client ./client
-  - docker build -t moehadidi/mutli-nginx ./nginx
-  - docker build -t moehadidi/mutli-server ./server
-  - docker build -t moehadidi/mutli-worker ./worker
+  - docker build -t moehadidi/multi-nginx ./nginx
+  - docker build -t moehadidi/multi-server ./server
+  - docker build -t moehadidi/multi-worker ./worker
   # Login into the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin 
   # Take those images and push them to docker hub
   - docker push moehadidi/multi-client
-  - docker push moehadidi/mutli-nginx
-  - docker push moehadidi/mutli-server
-  - docker push moehadidi/mutli-worker
+  - docker push moehadidi/multi-nginx
+  - docker push moehadidi/multi-server
+  - docker push moehadidi/multi-worker
 
 deploy:
   provider: elasticbeanstalk
@@ -32,7 +32,7 @@ deploy:
   bucket_path: docker_multi
   on:
     branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  #    secure: $AWS_ACCESS_KEY
+  access_key_id:
+    secure: $AWS_ACCESS_KEY
   secret_access_key:
     secure: $AWS_SECRET_KEY
